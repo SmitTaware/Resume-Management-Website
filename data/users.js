@@ -28,15 +28,13 @@ var exportedMethods ={
         if (updInfo.updatedtedCount === 0)
         { throw `Updation Failed.Could not update Profile ${id}`;}
     },
-    async getUser(Uname,Epass){
+    async getUser(Uname){
         const userCol = await users();
         
         const User = await userCol.findOne({userName:Uname});
-
-        if(!User){return false;}
-
-        if(User.encryptedPassword=== Epass){ return true; }
-        else{ return false; }
+    
+        if(!User){ return false;}
+        return User;
     }
 
 }  

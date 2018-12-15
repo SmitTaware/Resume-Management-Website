@@ -3,11 +3,12 @@ const rec = mongoCollection.rec;
 const uuid = require ('node-uuid');
 
 var exportedMethods ={
-    async createRec(User,Comp,Pos,JD,CV,AS){
+    async createRec(id,User,Comp,Pos,JD,CV,AS){
        
        const recCol =  await rec();
        const newRec ={
-           _id: uuid.v4(),
+           u_id: id,
+           r_id: uuid.v4(),
            user: User,
            company: Comp,
            position: Pos,
@@ -38,20 +39,20 @@ var exportedMethods ={
         if (updInfo.updatedtedCount === 0)
         { throw `Updation Failed.Could not update Record ${id}`;}
     },
-    async getUserByComp(CN){
+    async getRecByComp(id,CN){
         const recCol = await rec();
         
-        const Rec = await recCol.findOne({company:CN});
+        const Rec = await recCol.findOne({u_id :id,company:CN});
 
         if(!Rec){return false;}
         
         return Rec;
     },
 
-    async getUserByPos(Pos){
+    async getRecByPos(id,Pos){
         const recCol = await rec();
         
-        const Rec = await recCol.findOne({position:Pos});
+        const Rec = await recCol.findOne({u_id :id,position:Pos});
 
         if(!Rec){return false;}
         
@@ -62,7 +63,7 @@ var exportedMethods ={
      
         if(!id){throw "id not provided";}
         const recCol = await rec();
-        const Rec = await recCol.removeOne({_id: id});
+        const Rec = await recCol.removeOne({r_id: id});
 
         if (Rec.deletedCount === 0)
         { throw `Updation Failed.Could not delete Record ${id}`;}
