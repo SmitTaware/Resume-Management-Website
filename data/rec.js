@@ -3,7 +3,7 @@ const rec = mongoCollection.rec;
 const uuid = require ('node-uuid');
 
 var exportedMethods ={
-    async createRec(id,User,Comp,Pos,JD,CV,AS){
+    async createRec(id,User,Comp,Pos,JD,CV,sal){
        
        const recCol =  await rec();
        const newRec ={
@@ -17,7 +17,7 @@ var exportedMethods ={
            applicationStatus: AS,
            dateOfCreation: dateFotmat(Date.now),
            dateOfUpdation: dateFormat(Date.now),
-          // comments: com
+           salary: sal
        } ;
      await recCol.insertOne(newRec);
     } ,

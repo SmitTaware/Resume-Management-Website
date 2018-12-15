@@ -1,7 +1,8 @@
-//const homeRoutes = require("./home");
+const homeRoutes = require("./home");
 //const apiRoutes = require("./api");
 const userRoutes = require('./login');
 const registerRoutes = require('./register');
+const recRoutes = require('./rec');
 
 const constructorMethod = app => {
     app.use("/", userRoutes);
@@ -38,8 +39,8 @@ const constructorMethod = app => {
 
 
 
-  //  app.use("/", homeRoutes);
-
+    app.use("/", homeRoutes);
+    app.use("/",recRoutes);
  //   app.use("/", apiRoutes);
 
     app.use("*", (req, res) => {
