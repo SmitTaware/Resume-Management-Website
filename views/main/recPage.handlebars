@@ -1,0 +1,57 @@
+
+<div class="col-10">
+{{#if rec}}
+
+<form action="/recDel" method="post"><input type="hidden" value='{{rec._id}}' name="objId">
+<button type="submit">Delete Record {{ rec._id }}</button>
+</form>
+
+ <div class="container">
+   <form class="form-group">
+   <label for="company">Company:</label>
+   <p>{{rec.company}}</p>
+   <label for="position">Position:</label>
+   <p>{{rec.position}}</p>
+   <label for="jobDescription">Job Description:</label>
+   <p>{{rec.jobDescription}}</p>
+   <label for="salary">Salary: $</label>
+   <p>{{rec.salary}}</p>
+   <label for="dateOfCreation">Date of Creation:</label>
+   <p>{{rec.dateOfCreation}}</p>
+   <label for="dateOfUpdation">Date of Updation:</label>
+   <p>{{rec.dateOfUpdation}}</p>
+   <label for="">Download Resume:</label>
+   <p><a href='{{rec.resume}}'>
+        <button type="download">Download</button>
+</a></p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Comments:</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each com}}
+      <tr>
+        <td>{{this.comment}}</td>
+        <td><form action="/comDel" method="post"><input type="hidden" value='{{this._id}}'name="objId">
+        <button type="submit"></button>
+        </form></td>
+
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<form method="post" action="/crtCom" class="form-signin">
+<div class="form-group">
+    <label for="comment">Add Comment:</label>
+    <textarea class="form-control" type="text" value="" name="comment" id="comment" rows="4" required>
+    </textarea><input type="hidden" value='{{rec._id}}'name="objId">
+    <button type="submit">Add</button>
+
+</div>
+</form>
+   </div>
+   {{/if}}
+</div>

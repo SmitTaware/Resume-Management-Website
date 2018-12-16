@@ -1,5 +1,4 @@
 const homeRoutes = require("./home");
-//const apiRoutes = require("./api");
 const userRoutes = require('./login');
 const registerRoutes = require('./register');
 const recRoutes = require('./rec');
@@ -7,6 +6,7 @@ const recRoutes = require('./rec');
 const constructorMethod = app => {
     app.use("/", userRoutes);
     app.use("/", registerRoutes);
+    app.use("/",recRoutes);
 
     app.get('/logout', function(req, res, next) {
         if (req.session) {
@@ -26,7 +26,7 @@ const constructorMethod = app => {
         if(!req.cookies.AuthCookie || !req.session.user){
             res.clearCookie("AuthCookie");
             res.redirect('/login');
-        } else{    
+        } else{
             next();
         }
         return;
@@ -37,14 +37,15 @@ const constructorMethod = app => {
         next();
     });
 
-
-
     app.use("/", homeRoutes);
-    app.use("/",recRoutes);
- //   app.use("/", apiRoutes);
 
     app.use("*", (req, res) => {
-        res.render("main/login", null);
+      if (req.cookies.AuthCookie || req.session.user) {
+          res.redirect('/home');
+      }
+      else {
+          res.render('main/login');
+      }
   });
 };
 
