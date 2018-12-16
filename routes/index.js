@@ -6,7 +6,7 @@ const recRoutes = require('./rec');
 const constructorMethod = app => {
     app.use("/", userRoutes);
     app.use("/", registerRoutes);
-    app.use("/",recRoutes);
+   
 
     app.get('/logout', function(req, res, next) {
         if (req.session) {
@@ -31,6 +31,16 @@ const constructorMethod = app => {
         }
         return;
     });
+    
+     app.use("/rec", (req, res, next) => {
+        if(!req.cookies.AuthCookie || !req.session.user){
+            res.clearCookie("AuthCookie");
+            res.redirect('/login');
+        } else{
+            next();
+        }
+        return;
+    });
 
     app.use(function (req, res, next) {
         res.locals.session = req.session;
@@ -38,6 +48,7 @@ const constructorMethod = app => {
     });
 
     app.use("/", homeRoutes);
+    app.use("/",recRoutes);
 
     app.use("*", (req, res) => {
       if (req.cookies.AuthCookie || req.session.user) {
