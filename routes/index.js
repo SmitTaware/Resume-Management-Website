@@ -31,6 +31,16 @@ const constructorMethod = app => {
         }
         return;
     });
+    
+     app.use("/rec", (req, res, next) => {
+        if(!req.cookies.AuthCookie || !req.session.user){
+            res.clearCookie("AuthCookie");
+            res.redirect('/login');
+        } else{
+            next();
+        }
+        return;
+    });
 
     app.use(function (req, res, next) {
         res.locals.session = req.session;
