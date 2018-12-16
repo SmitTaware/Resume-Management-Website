@@ -16,3 +16,22 @@ function checkPasswordMatch() {
 
     }
 }
+
+$("#email").on('blur',function(){
+    $.ajax({
+        type: "POST",
+        url: '/checkEmail',
+        data: {email:$(this).val()},
+        success: function(data){
+            console.log(data);
+            if (data){
+                $("#emailId_alert").html("Email Id already exists!");
+                $("#emailId_alert").show();
+                $("#emailId_alert").attr("disabled", true);
+            }else {
+                $("#emailId_alert").hide();
+                $("#signup").attr("disabled", false);
+            }
+        }
+    })
+})

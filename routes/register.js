@@ -30,12 +30,12 @@ router.post("/register", async (req, res) => {
     if (req.body.password.length > 20) error +="Password is too long <br> ";
     if (req.body.password.length < 8) error +="Password is too short  <br>";
 
-    try{
+    /*try{
         const user = await dbOperation.getUser(req.body.email);
         if(user) error +="Email is already used";
     }catch (e) {
         res.render("main/register", { error: error});
-    }
+    }*/
     if(error !== ""){
         res.render("main/register", { error: error});
         return;
@@ -52,10 +52,15 @@ router.post("/register", async (req, res) => {
         res.render("main/register", { error: e});
         console.log(e);
     }
-})
+});
+
+router.post("/checkEmail",async (req,res)=>{
+
+        const user = await dbOperation.getUser(req.body.email);
+        if(user) {res.send(true);}
+        else {res.send(false);}
+
+});
 
 
 module.exports = router;
-
-
-

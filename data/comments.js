@@ -3,13 +3,14 @@ const com = mongoCollection.comments;
 const rec = mongoCollection.rec;
 
 var exportedMethods={
-    async createCom(recId,com){
-
+    async createCom(recId,com1){
+        console.log("in Create:")
+        console.log(typeof(recId));
         const comCol =  await com();
         const newCom ={
 
             rec_id : recId,
-            commment : com
+            commment : com1
         } ;
       await comCol.insertOne(newCom);
      } ,
@@ -28,9 +29,14 @@ var exportedMethods={
     },
     async findCom(recId){
         const comCol = await com();
-
-        const coms = await comCol.find({rec_id: recId}).toArray();
-        return coms;
+        console.log("find:")
+        console.log(typeof(recId));
+        RecId = recId.toString();
+//      const Rec = await recCol.find({u_id:id}).toArray();
+        const Com = await comCol.find({rec_id:recId}).toArray();
+        console.log("in comments :");
+        console.log(Com);
+        return Com;
     },
     async deleteCom(id){
 

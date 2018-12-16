@@ -67,9 +67,11 @@ router.post("/record", upload.single("resume"),async (req, res) => {
     try {
        const Record = await dbOperation.createRec(req.session.user._id,req.session.user.firstname,req.body.company,req.body.position,req.body.jobD,cv,as,req.body.salary);
        console.log(Record);
-       const Com =await dbOp.findCom(Record._id);
+       const Records = await dbOperation.getAllRec(req.session.user._id);
+       res.render("main/home", {rec: Records, success: "            Record Created!"});
+       /*const Com =await dbOp.findCom(Record._id);
        const Records = await dbOperation.getRecById(Record._id);
-        res.render("main/recPage",{rec: Records, com: Com});
+        res.render("main/recPage",{rec: Records, com: Com});*/
 
     } catch (e) {
         res.render("main/recForm", { error: e});
@@ -79,33 +81,32 @@ router.post("/record", upload.single("resume"),async (req, res) => {
 
 router.post("/recView", async (req,res)=> {
     const Record = await dbOperation.getRecById(req.body.objId);
-    const Com =await dbOp.findCom(Record._id);
+    const Com =await dbOp.findCom(req.body.objId);
     res.render("main/recPage",{rec: Record, com: Com});
 });
 
 router.post("/recDel",async (req,res)=> {
     await dbOperation.deleteRec(req.body.objId);
     const Records = await dbOperation.getAllRec(req.session.user._id);
-    res.render("main/home", {rec: Records, success: "Record Deleted!"});
+    res.render("main/home", {rec: Records, success: "                Record Deleted!"});
 });
 
 router.post("/recUpd",async (req,res)=> {
-    const Record = await dbOperation.updateRec(req.body.recId,req.body.updRec);
+    const Record = await dbOperation.updateRec(req.body.objId,req.body.updRec);
     res.render("main/recPage",{rec: Record});
 });
-router.delete("/comDel",async (req,res)=> {
-    const Record = await dbOperation.getRecById(req.body.recId);
+router.post("/comDel",async (req,res)=> {
+    const Record = await dbOperation.getRecById(req.body.objId);
      await dbOp.deleteCom(req.body.comId);
     const Com = await dbOp.findCom(Record._id);
     res.render("main/recPage",{rec: Record,com: Com});
 });
-router.delete("/comCrt",async (req,res)=> {
-    const Record = await dbOperation.getRecById(req.body.recId);
-    const crtCom = await dbOp.createCom(req.body.recId,req.body.comment);
-    const Com = await dbOp.findCom(Record._id);
+router.post("/crtCom",async (req,res)=> {
+    const Record = await dbOperation.getRecById(req.body.objId);
+    const crtCom = await dbOp.createCom(req.body.objId,req.body.comment);
+    const Com = await dbOp.findCom(req.body.objId);
     res.render("main/recPage",{rec: Record,com: Com});
 });
-
 
 
 module.exports = router;

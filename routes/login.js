@@ -36,11 +36,6 @@ router.post("/login", async (req, res) => {
         return;
     }
 
-    console.log(userObj.password_login);
-    console.log(req.body.password_login);
-
-    console.log(userObj);
-
     const passwordMatches = await bcrypt.compareSync(req.body.password_login, userObj.password);
 
     if (!passwordMatches) {
@@ -56,7 +51,8 @@ router.post("/login", async (req, res) => {
         res.redirect('/home');
     }
 
-
 });
+
+
 
 module.exports = router;
