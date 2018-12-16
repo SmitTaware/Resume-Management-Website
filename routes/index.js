@@ -6,7 +6,7 @@ const recRoutes = require('./rec');
 const constructorMethod = app => {
     app.use("/", userRoutes);
     app.use("/", registerRoutes);
-    app.use("/",recRoutes);
+   
 
     app.get('/logout', function(req, res, next) {
         if (req.session) {
@@ -38,6 +38,7 @@ const constructorMethod = app => {
     });
 
     app.use("/", homeRoutes);
+    app.use("/",recRoutes);
 
     app.use("*", (req, res) => {
       if (req.cookies.AuthCookie || req.session.user) {
