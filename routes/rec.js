@@ -27,7 +27,7 @@ router.get("/rec", (req, res) => {
 
 });
 
-router.post("/record", upload.single("resume"),async (req, res) => {
+router.post("/home", upload.single("resume"),async (req, res) => {
 
     console.log(req.body, req.file);
 
