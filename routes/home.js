@@ -16,6 +16,15 @@ router.get("/home", async (req, res) => {
 
 });
 
+router.get("/home/authors", async(req, res) =>{
+    try{
+        res.render("main/authors");
+    }catch (e){
+        res.status(500).send();
+    }
+})
+
+
 router.get("/home/account", async(req, res) => {
     try {
     const id = req.cookies.AuthCookie;
