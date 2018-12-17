@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path =require('path');
+const xss =require('xss');
 //set storage engine
 /*const storage = multer.diskStorage({
     destination: './public/uploads',
@@ -127,7 +128,7 @@ router.post("/comDel",async (req,res)=> {
 router.post("/crtCom",async (req,res)=> {
     try{
     const Record = await dbOperation.getRecById(req.body.objId);
-    const crtCom = await dbOp.createCom(req.body.objId,req.body.comment);
+    const crtCom = await dbOp.createCom(req.body.objId,xss(req.body.comment));
     const Com = await dbOp.findCom(req.body.objId);
     res.render("main/recPage",{rec: Record,com: Com});
 } catch (e) {

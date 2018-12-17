@@ -6,6 +6,11 @@ var ObjectId = require('mongodb').ObjectId;
 var exportedMethods ={
     async createRec(id,User,Comp,Pos,JD,CV,AS,sal){
        const recCol =  await rec();
+       var today = new Date();
+       var dd = today.getDate();
+       var mm = today.getMonth() + 1;
+       var yyyy = today.getFullYear();
+       var date = yyyy + "/" + mm + "/" + dd;
        const newRec ={
            u_id: id,
            user: User,
@@ -14,12 +19,12 @@ var exportedMethods ={
            jobDescription: JD,
            resume: CV,
            applicationStatus: AS,
-           dateOfCreation: Date.now(),
-           dateOfUpdation: Date.now(),
+           dateOfCreation: date,
+           dateOfUpdation: date,
            salary: sal
        } ;
      const Rec=await recCol.insertOne(newRec);
-     console.log(Rec);
+
       return Rec;
     } ,
 
@@ -66,7 +71,7 @@ var exportedMethods ={
         const recCol = await rec();
         try{
             const rec = await recCol.deleteOne({_id: ObjectId(id)});
-            console.log(rec);
+
             return true;
         }catch(e){
             console.log(e);
