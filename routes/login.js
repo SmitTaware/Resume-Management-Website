@@ -6,17 +6,20 @@ const bcrypt = require('bcrypt-nodejs');
 const dbOperation = require("../data/users");
 
 router.get("/login", (req, res) => {
-  console.log(req.cookies.AuthCookie, req.session.user);
+  try{
     if (req.cookies.AuthCookie || req.session.user) {
         res.redirect('/home');
     }
     else {
         res.render('main/login');
     }
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 router.post("/login", async (req, res) => {
-
+try{
     if (!req.body.email_login) {
 
         res.render("main/login", {error: "email cannot be empty"});
@@ -50,7 +53,9 @@ router.post("/login", async (req, res) => {
         req.session.user = userObj;
         res.redirect('/home');
     }
-
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 

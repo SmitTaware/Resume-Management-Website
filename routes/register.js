@@ -15,7 +15,7 @@ router.get("/register", (req, res) => {
 
 router.post("/register", async (req, res) => {
 
-
+try {
     let error = "";
     if (!req.body.firstname) error +="Firstname cannot be empty <br>";
     if (!req.body.lastname) error +="Lastname cannot be empty  <br>";
@@ -52,13 +52,19 @@ router.post("/register", async (req, res) => {
         res.render("main/register", { error: e});
         console.log(e);
     }
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 router.post("/checkEmail",async (req,res)=>{
-
+try {
         const user = await dbOperation.getUser(req.body.email);
         if(user) {res.send(true);}
         else {res.send(false);}
+    } catch (e) {
+        res.status(500).send();
+    }
 
 });
 

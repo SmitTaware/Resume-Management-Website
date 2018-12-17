@@ -22,14 +22,14 @@ const dbOp = require("../data/comments");
 
 
 router.get("/rec", (req, res) => {
-    console.log("here");
+
     res.render('main/recForm');
 
 });
 
 router.post("/record", upload.single("resume"),async (req, res) => {
 
-    console.log(req.body, req.file);
+try{
 
     let error = "", cv = "";
     if (!req.body.company) error +="Company Name cannot be empty <br>";
@@ -77,25 +77,41 @@ router.post("/record", upload.single("resume"),async (req, res) => {
         res.render("main/recForm", { error: e});
         console.log(e);
     }
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 router.post("/recView", async (req,res)=> {
+    try{
     const Record = await dbOperation.getRecById(req.body.objId);
     const Com =await dbOp.findCom(req.body.objId);
     res.render("main/recPage",{rec: Record, com: Com});
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 router.post("/recDel",async (req,res)=> {
+    try{
     await dbOperation.deleteRec(req.body.objId);
     const Records = await dbOperation.getAllRec(req.session.user._id);
     res.render("main/home", {rec: Records, success: "                Record Deleted!"});
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 router.post("/recUpd",async (req,res)=> {
+    try{
     const Record = await dbOperation.updateRec(req.body.objId,req.body.updRec);
     res.render("main/recPage",{rec: Record});
+} catch (e) {
+    res.status(500).send();
+}
 });
 router.post("/comDel",async (req,res)=> {
+    try{
         const DC = await dbOp.deleteCom(req.body.objId);
         const Record = await dbOperation.getRecById(req.body.RecId);
         console.log("Record:");
@@ -104,12 +120,19 @@ router.post("/comDel",async (req,res)=> {
        console.log("Com:");
        console.log(Com);
       res.render("main/recPage",{rec: Record,com: Com});
+  } catch (e) {
+      res.status(500).send();
+  }
 });
 router.post("/crtCom",async (req,res)=> {
+    try{
     const Record = await dbOperation.getRecById(req.body.objId);
     const crtCom = await dbOp.createCom(req.body.objId,req.body.comment);
     const Com = await dbOp.findCom(req.body.objId);
     res.render("main/recPage",{rec: Record,com: Com});
+} catch (e) {
+    res.status(500).send();
+}
 });
 
 
