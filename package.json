@@ -4,9 +4,9 @@
   "description": "Arrays start at 1 final project",
   "main": "app.js",
   "scripts": {
-    "seed": "node ./tasks/seed.js",
+    "seed": "node seed.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

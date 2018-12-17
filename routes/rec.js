@@ -115,11 +115,9 @@ router.post("/comDel",async (req,res)=> {
     try{
         const DC = await dbOp.deleteCom(req.body.objId);
         const Record = await dbOperation.getRecById(req.body.RecId);
-        console.log("Record:");
-        console.log(Record);
+
        const Com = await dbOp.findCom(req.body.RecId);
-       console.log("Com:");
-       console.log(Com);
+    
       res.render("main/recPage",{rec: Record,com: Com});
   } catch (e) {
       res.status(500).send();
