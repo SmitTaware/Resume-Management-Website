@@ -1,11 +1,11 @@
 const mongoCollection =require('../config/mongoCollections');
 const com = mongoCollection.comments;
 const rec = mongoCollection.rec;
+const ObjectID = require("mongodb").ObjectID;
 
 var exportedMethods={
     async createCom(recId,com1){
-        console.log("in Create:")
-        console.log(typeof(recId));
+
         const comCol =  await com();
         const newCom ={
 
@@ -29,23 +29,19 @@ var exportedMethods={
     },
     async findCom(recId){
         const comCol = await com();
-        console.log("find:")
         console.log(typeof(recId));
         RecId = recId.toString();
 //      const Rec = await recCol.find({u_id:id}).toArray();
         const Com = await comCol.find({rec_id:recId}).toArray();
-        console.log("in comments :");
-        console.log(Com);
         return Com;
     },
     async deleteCom(id){
-
         if(!id){throw "id not provided";}
-        const comCol = await com();
-        const Com = await comCol.removeOne({com_id: id});
-
-        if (Com.deletedCount === 0)
-        { throw `Updation Failed.Could not delete Record ${id}`;}
-}
+            const comCol = await com();
+            const Com = await comCol.removeOne({_id: new ObjectID(id)});
+             if (Com.deletedCount === 0)
+            { throw `Updation Failed.Could not delete Comment ${id}`;}
+            return true;
+        }
 }
 module.exports = exportedMethods;

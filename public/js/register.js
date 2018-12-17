@@ -27,7 +27,7 @@ $("#email").on('blur',function(){
             if (data){
                 $("#emailId_alert").html("Email Id already exists!");
                 $("#emailId_alert").show();
-                $("#emailId_alert").attr("disabled", true);
+                $("#signup").attr("disabled", true);
             }else {
                 $("#emailId_alert").hide();
                 $("#signup").attr("disabled", false);

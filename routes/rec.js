@@ -96,10 +96,14 @@ router.post("/recUpd",async (req,res)=> {
     res.render("main/recPage",{rec: Record});
 });
 router.post("/comDel",async (req,res)=> {
-    const Record = await dbOperation.getRecById(req.body.objId);
-     await dbOp.deleteCom(req.body.comId);
-    const Com = await dbOp.findCom(Record._id);
-    res.render("main/recPage",{rec: Record,com: Com});
+        const DC = await dbOp.deleteCom(req.body.objId);
+        const Record = await dbOperation.getRecById(req.body.RecId);
+        console.log("Record:");
+        console.log(Record);
+       const Com = await dbOp.findCom(req.body.RecId);
+       console.log("Com:");
+       console.log(Com);
+      res.render("main/recPage",{rec: Record,com: Com});
 });
 router.post("/crtCom",async (req,res)=> {
     const Record = await dbOperation.getRecById(req.body.objId);

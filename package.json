@@ -9,13 +9,10 @@
     "start": "nodemon app.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/trs576/cs546finalproject.git"
   },
-  "author": "Tim Swierad, Bruno Rebaza, Justin Miller, Wei Chen, Yue Lei",
+  "author": "Smit ,Yimming ,Xiao , Krutharth(group 15)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/trs576/cs546finalproject/issues"
   },
   "homepage": "https://github.com/trs576/cs546finalproject#readme",
   "dependencies": {
